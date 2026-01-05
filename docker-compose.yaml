@@ -1,0 +1,78 @@
+services:
+  news:
+    build:
+      context: ./news
+      dockerfile: Dockerfile
+    container_name: news
+    ports:
+      - "8080:8080"
+    volumes:
+      - news-data:/data
+    networks:
+      - pnp-net
+
+  llm1:
+    image: ollama/ollama:latest
+    container_name: llm1
+    volumes:
+      - ollama-llm1:/root/.ollama
+    networks:
+      - pnp-net
+
+  llm2:
+    image: ollama/ollama:latest
+    container_name: llm2
+    volumes:
+      - ollama-llm2:/root/.ollama
+    networks:
+      - pnp-net
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    environment:
+      - LLM1_URL=http://llm1:11434/api/generate
+      - LLM2_URL=http://llm2:11434/api/generate
+      - NEWS_URL=http://news:8080/news
+      - LLM1_MODEL=llama3.2:3b
+      - LLM2_MODEL=llama3.2:3b
+      - REQUEST_TIMEOUT_SEC=120
+      - NEWS_TIMEOUT_SEC=15
+      - MAX_NEWS_CHARS=6000
+      - MAX_PROFILE_CHARS=2000
+      - RETRY_COUNT=2
+      - RETRY_BACKOFF_SEC=0.8
+    ports:
+      - "8000:8000"
+    networks:
+      - pnp-net
+    depends_on:
+      - news
+      - llm1
+      - llm2
+
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    container_name: ui
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+      - REQUEST_TIMEOUT_SEC=120
+    ports:
+      - "8501:8501"
+    networks:
+      - pnp-net
+    depends_on:
+      - gateway
+
+networks:
+  pnp-net:
+    driver: bridge
+
+volumes:
+  news-data:
+  ollama-llm1:
+  ollama-llm2:
