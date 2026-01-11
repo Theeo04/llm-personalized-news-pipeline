@@ -3,7 +3,8 @@ import requests
 import streamlit as st
 
 GATEWAY_URL = os.getenv("GATEWAY_URL", "http://gateway:8000")
-TIMEOUT = int(os.getenv("REQUEST_TIMEOUT_SEC", "120"))
+# Will now pick up 300 from docker-compose
+TIMEOUT = int(os.getenv("REQUEST_TIMEOUT_SEC", "300"))
 
 st.set_page_config(page_title="Personalized News", layout="centered")
 st.title("Personalized News Pipeline")
@@ -46,5 +47,12 @@ if user_input:
 
                 st.session_state.messages.append({"role": "assistant", "content": answer})
 
+            except requests.HTTPError as e:
+                # Try to surface detailed gateway error if provided
+                try:
+                    err_payload = e.response.json()
+                except Exception:
+                    err_payload = {"detail": str(e)}
+                st.error(f"Gateway error: {err_payload}")
             except Exception as e:
                 st.error(f"Request failed: {e}")

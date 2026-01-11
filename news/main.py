@@ -18,25 +18,25 @@ PREDEFINED_ITEMS = [
         "title": "Quantization makes small open-source LLMs faster on consumer GPUs",
         "source": "Tech Digest",
         "url": "https://example.com/it-quantization",
-        "description": "New quantization recipes reduce VRAM usage while keeping quality competitive.",
-        "content": "Quantization techniques continue to improve inference efficiency..."
+        "description": "New quantization methods reduce VRAM usage while maintaining competitive model quality.",
+        "content": "Quantization techniques continue to improve inference efficiency, enabling models to run on affordable consumer hardware..."
     },
     {
         "category": "business",
-        "title": "Startups shift from growth-at-all-costs to efficient execution",
+        "title": "Startups shift from aggressive growth to efficient execution",
         "source": "Business Weekly",
         "url": "https://example.com/business-efficiency",
-        "description": "Investors reward profitability metrics and strong unit economics in 2026.",
-        "content": "Founders focus on burn multiple, CAC/LTV, and sustainable go-to-market..."
+        "description": "Investors reward profitability and strong financial metrics in 2026.",
+        "content": "Founders are focusing on burn multiple, CAC/LTV ratios, and sustainable go-to-market strategies..."
     },
     {
         "category": "sports",
-        "title": "Wearables and analytics reshape training plans in elite football",
+        "title": "The evolution of tactics and training in elite football",
         "source": "Sports Insights",
-        "url": "https://example.com/sports-analytics",
-        "description": "Clubs use load management and recovery signals to reduce injuries.",
-        "content": "Performance teams increasingly combine GPS, HRV, and match data..."
-    },
+        "url": "https://example.com/football-analysis",
+        "description": "Top clubs adapt their playing style and training methods to gain a competitive edge.",
+        "content": "In elite football, technical staffs emphasize tactical organization, sport-specific physical preparation, and detailed match analysis to optimize team performance..."
+    }
 ]
 
 class NewsItem(BaseModel):

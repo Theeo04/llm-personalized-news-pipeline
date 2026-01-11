@@ -37,8 +37,8 @@ services:
       - LLM2_URL=http://llm2:11434/api/generate
       - NEWS_URL=http://news:8080/news
       - LLM1_MODEL=llama3.2:3b
-      - LLM2_MODEL=llama3.2:3b
-      - REQUEST_TIMEOUT_SEC=120
+      - LLM2_MODEL=llama3.1:8b
+      - REQUEST_TIMEOUT_SEC=300
       - NEWS_TIMEOUT_SEC=15
       - MAX_NEWS_CHARS=6000
       - MAX_PROFILE_CHARS=2000
@@ -60,7 +60,7 @@ services:
     container_name: ui
     environment:
       - GATEWAY_URL=http://gateway:8000
-      - REQUEST_TIMEOUT_SEC=120
+      - REQUEST_TIMEOUT_SEC=300
     ports:
       - "8501:8501"
     networks:
